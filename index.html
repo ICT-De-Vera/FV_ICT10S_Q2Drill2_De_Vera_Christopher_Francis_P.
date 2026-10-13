@@ -239,11 +239,10 @@
                     <button type="submit" class="submit-btn" py-click="add_member">Add member <span aria-hidden="true">→</span></button>
                 </form>
 
-                <!-- Target element matching document.getElementById("output1") -->
-                <div id="result" class="result-box">
+                <div id="result" class="result-box active" role="status" aria-live="polite">
                     <h1>Roster</h1>
-                      <div id="output1"></div>
-                        <script type="py" src="main.py"></script>
+                    <div id="output"></div>
+                    <script type="py" src="main.py"></script>
                 </div>
                 </div>
 
@@ -251,7 +250,5 @@
             </div>
         </div>
     </div>
-
-
 </body>
 </html>
