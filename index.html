@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07111f">
+    <meta name="description" content="Check whether someone is a member of the ICT Tech Club.">
+    <title>ICT Tech Club | Member Checker</title>
+
+    <!-- PyScript Releases -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #07111f;
+            background-image: radial-gradient(ellipse at 50% 0%, #12344c 0%, transparent 55%), linear-gradient(135deg, #07111f 0%, #0b1727 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px 20px;
+            color: #e9f2f8;
+        }
+
+        .atlas-container {
+            width: 100%;
+            max-width: 620px;
+            background: #0c1a2a;
+            border: 1px solid #1e3549;
+            border-radius: 24px;
+            box-shadow: 0 28px 80px #0008;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Hero Header Section */
+        .hero {
+            padding: 38px 42px 78px;
+            color: #f4f9ff;
+            position: relative;
+            background: radial-gradient(circle, #6ce6d51a 1px, transparent 1px);
+            background-size: 22px 22px;
+        }
+
+        .sub-header {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #a4becd;
+            margin-bottom: 22px;
+            font-weight: 700;
+        }
+
+        .sub-header::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #5ce0c1;
+            box-shadow: 0 0 14px #5ce0c1;
+        }
+
+        .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(34px, 7vw, 48px);
+            line-height: 1.08;
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            margin-bottom: 16px;
+        }
+
+        .title em {
+            font-style: normal;
+            color: #63e2c4;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #a5b8c7;
+            max-width: 440px;
+            line-height: 1.7;
+        }
+
+        /* Curved transition divider */
+        .wave-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #34546a, transparent);
+        }
+
+        /* Card Controls */
+        .card-wrapper {
+            background: #0c1a2a;
+            padding: 0 42px 42px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lookup-card {
+            background: #102236;
+            border: 1px solid #203b51;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px #0003;
+            position: relative;
+        }
+
+        .card-label {
+            font-size: 10px;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+            color: #61d9bd;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 23px;
+            color: #f0f6fc;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 22px;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .name-input {
+            width: 100%;
+            border: 1px solid #2d485e;
+            border-radius: 10px;
+            padding: 15px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            color: #f0f6fc;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #0b1928;
+        }
+
+        .name-input::placeholder {
+            color: #71879a;
+        }
+
+        .name-input:focus {
+            border-color: #55d8b9;
+            box-shadow: 0 0 0 3px #55d8b922;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #5ce0c1;
+            color: #08201e;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #7aecd2;
+            box-shadow: 0 7px 20px #5ce0c133;
+            transform: translateY(-1px);
+        }
+
+        /* Results Box */
+        .result-box {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 10px;
+            background: #102c2b;
+            border: 1px solid #24564d;
+            display: none;
+            color: #a1f1db;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .result-box.active {
+            display: block;
+        }
+
+        .result-box.not-member {
+            background: #2a2025;
+            border-color: #65434b;
+            color: #ffc0c5;
+        }
+
+        .roster-note {
+            color: #8198aa;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-top: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="atlas-container">
+        <div class="hero">
+            <div class="sub-header">ICT Club Member Adder</div>
+            <h1 class="title">Member<br><em>Adder</em></h1>
+            <p class="description">Add ICT Tech Club membership in seconds. Enter a name below to add them to the club roster.</p>
+            <div class="wave-divider"></div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="lookup-card">
+                <div class="card-label">New Member</div>
+                <h2 class="card-title">Add a new member</h2>
+                
+                <form id="lookup-form" onsubmit="return false;">
+                    <div class="input-group">
+                        <input type="text" id="first-name-input" class="name-input" placeholder="Type the person's first name" autocomplete="off" aria-label="Person's full name" required>
+                        <input type="text" id="last-name-input" class="name-input" placeholder="Type the person's last name" autocomplete="off" aria-label="Person's last name" required>
+                    </div>
+                    <button type="submit" class="submit-btn" py-click="add_member">Add member <span aria-hidden="true">→</span></button>
+                </form>
+
+                <!-- Target element matching document.getElementById("output1") -->
+                <div id="result" class="result-box">
+                    <h1>Roster</h1>
+                      <div id="output1"></div>
+                        <script type="py" src="main.py"></script>
+                </div>
+                </div>
+
+                <p class="roster-note">Official roster is active. Case-insensitive matching enabled.</p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
